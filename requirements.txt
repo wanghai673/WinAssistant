@@ -1,0 +1,10 @@
+ctranslate2==4.4.0
+faster_whisper==1.1.1
+numpy==1.21.5
+OpenCC==1.1.9
+pvporcupine==3.0.5
+pvrecorder==1.2.4
+python-dotenv==1.1.1
+simpleaudio==1.0.4
+sounddevice==0.5.2
+webrtcvad==2.0.10
