@@ -35,7 +35,7 @@ def main_loop():
     load_dotenv()
     list_devices()
     DEVICE_INDEX = auto_select_mic_device()
-    rouse_word = os.getenv("ROUSE_WORD")  # 可选『小智』
+    rouse_word = os.getenv("ROUSE_WORD")
     print(rouse_word)
     print(f"自动选择的音频输入设备索引: {DEVICE_INDEX}")
     rouser = Rouser(access_key=os.getenv("ACCESS_KEY"),
