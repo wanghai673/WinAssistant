@@ -5,9 +5,9 @@ import simpleaudio as sa
 
 class Player:
     def __init__(self):
-        self.WAKE_VOICE_PATH = 'music/zai.wav'
-        self.OK_VOICE_PATH = 'music/ok.wav'
-        self.SORRY_VOICE_PATH = 'music/sorry.wav'
+        self.WAKE_VOICE_PATH = 'data/zai.wav'
+        self.OK_VOICE_PATH = 'data/ok.wav'
+        self.SORRY_VOICE_PATH = 'data/sorry.wav'
 
     def play_voice(self, block=True, type="zai"):
         path = self.WAKE_VOICE_PATH

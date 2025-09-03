@@ -8,9 +8,11 @@ import time
 import sys
 import os
 from dotenv import load_dotenv
+import warnings
 
 
 def list_devices():
+    """获取可选语音设备"""
     devices = PvRecorder.get_available_devices()
     print("可用音频输入设备列表（索引：名称）：")
     for i, name in enumerate(devices):
@@ -33,6 +35,8 @@ def auto_select_mic_device():
 
 
 def main_loop():
+    # Suppress warnings
+    warnings.filterwarnings("ignore")
     load_dotenv()
     list_devices()
     DEVICE_INDEX = auto_select_mic_device()
@@ -54,8 +58,8 @@ def main_loop():
 
         print(f"正在监听唤醒词：『{rouse_word}』")
         print("按 Ctrl+C 结束。")
-        print(
-            f"(采样率: {rouser.porcupine.sample_rate} Hz, 帧长: {rouser.porcupine.frame_length})")
+        # print(
+        #     f"(采样率: {rouser.porcupine.sample_rate} Hz, 帧长: {rouser.porcupine.frame_length})")
 
         def handle_sigint(sig, frame):
             raise KeyboardInterrupt
