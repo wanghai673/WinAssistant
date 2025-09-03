@@ -242,6 +242,7 @@ class Reader:
                 temperature=0.0,
                 no_speech_threshold=0.6,
                 condition_on_previous_text=True,
+                initial_prompt="你是一个语音电脑操作助手，你接受用户的语音，用户想对Windows电脑做操作。"  # 可自定义提示词
             )
 
             parts = []

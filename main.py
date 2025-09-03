@@ -1,6 +1,7 @@
 from utils.player import Player
 from utils.reader import Reader
 from utils.rouser import Rouser
+from utils.UIoperator import UIOperator
 from pvrecorder import PvRecorder
 import signal
 import time
@@ -43,6 +44,7 @@ def main_loop():
                     keyword=rouse_word)
     player = Player()
     reader = Reader(device_index=DEVICE_INDEX)
+    op = UIOperator()
 
     try:
 
@@ -66,14 +68,17 @@ def main_loop():
                 ts = time.strftime("%Y-%m-%d %H:%M:%S")
                 print(f"[{ts}] 检测到唤醒词：{rouse_word}", flush=True)
                 try:
-                    player.play_wake_voice(block=True)
+                    player.play_voice(block=True)
                     # 复用同一个 recorder，提示音已在上面播放
                     text = reader.realtime_zh(
                         rec_shared=recorder, beep_guard=0.0)
                     if text:
                         print(f"[{ts}] 识别文本：{text}", flush=True)
+                        player.play_voice(block=True, type="ok")
+                        op.run_and_ask(text)
                     else:
                         print(f"[{ts}] 未识别到有效语音。", flush=True)
+                        player.play_voice(block=True, type="sorry")
                 except BaseException as e:
                     print(f"[唤醒处理] 异常：{type(e).__name__}: {e}",
                           file=sys.stderr, flush=True)

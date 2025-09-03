@@ -6,19 +6,23 @@ import simpleaudio as sa
 class Player:
     def __init__(self):
         self.WAKE_VOICE_PATH = 'music/zai.wav'
-        self._wake_wave = None  # 初始化为None
+        self.OK_VOICE_PATH = 'music/ok.wav'
+        self.SORRY_VOICE_PATH = 'music/sorry.wav'
 
-    def play_wake_voice(self, block=True):
+    def play_voice(self, block=True, type="zai"):
+        path = self.WAKE_VOICE_PATH
+        if type == "ok":
+            path = self.OK_VOICE_PATH
+        elif type == "sorry":
+            path = self.SORRY_VOICE_PATH
         try:
             if sys.platform.startswith("win"):
-                winsound.PlaySound(self.WAKE_VOICE_PATH,
+                winsound.PlaySound(path,
                                    winsound.SND_FILENAME)
                 return
             else:
-                if self._wake_wave is None:
-                    self._wake_wave = sa.WaveObject.from_wave_file(
-                        self.WAKE_VOICE_PATH)
-                play_obj = self._wake_wave.play()  # 使用self._wake_wave
+                _wake_wave = sa.WaveObject.from_wave_file(path)
+                play_obj = _wake_wave.play()  # 使用self._wake_wave
                 if block:
                     play_obj.wait_done()
         except BaseException as e:
@@ -28,4 +32,4 @@ class Player:
 
 if __name__ == '__main__':
     p = Player()
-    p.play_wake_voice(True)
+    p.play_voice(True, "zai")
