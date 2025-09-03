@@ -7,7 +7,8 @@
 
 ## 演示视频
 
-## [![演示视频](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](data/演示.mp4)
+
+https://github.com/user-attachments/assets/a48b8e94-8b95-46eb-9aa5-a4085c2341c4
 
 ## ✨ 核心特性
 
