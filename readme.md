@@ -7,7 +7,6 @@
 
 ## 演示视频
 
-
 https://github.com/user-attachments/assets/a48b8e94-8b95-46eb-9aa5-a4085c2341c4
 
 ## ✨ 核心特性
@@ -148,24 +147,38 @@ python main.py
 ## 🧪 简单示例（伪代码）
 
 ```python
+# 极简示例：监听唤醒 → 识别
 from utils.player import Player
 from utils.reader import Reader
 from utils.rouser import Rouser
-# from utils.UIoperator import handle_intent  # 你的处理态
+from pvrecorder import PvRecorder
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+ACCESS_KEY = os.getenv("ACCESS_KEY")
+ROUSE_WORD = os.getenv("ROUSE_WORD", "小智")
+DEVICE_INDEX = -1  # 使用系统默认输入设备
+
+rouser = Rouser(access_key=ACCESS_KEY, device_index=DEVICE_INDEX, keyword=ROUSE_WORD)
 player = Player()
-reader = Reader()
-rouser = Rouser()  # Porcupine
+reader = Reader(device_index=DEVICE_INDEX)
+
+recorder = PvRecorder(device_index=DEVICE_INDEX, frame_length=rouser.porcupine.frame_length)
+recorder.start()
+print(f"正在监听唤醒词：『{ROUSE_WORD}』 (Ctrl+C 退出)")
 
 while True:
-    if rouser.heard_wake_word():
-        player.play_voice(type="zai")  # “在”
-        text = reader.realtime_zh(beep_guard=0.5)
+    pcm = recorder.read()
+    if rouser.process(pcm) >= 0:              # 检测到唤醒
+        player.play_voice(block=True)         # 提示音
+        text = reader.realtime_zh(rec_shared=recorder, beep_guard=0.0)
         if text:
-            # handle_intent(text)
-            player.play_voice(type="ok")
+            print("识别文本：", text)
+            player.play_voice(block=True, type="ok")
+            # 在这里根据 text 执行动作...
         else:
-            player.play_voice(type="sorry")
+            player.play_voice(block=True, type="sorry")
 ```
 
 ---
