@@ -20,7 +20,7 @@ class UIOperator:
         # 等待该位置像素不是黑色
         while True:
             pixel = pyautogui.pixel(715, 809)
-            if pixel != (0, 0, 0):
+            if sum(pixel) > 200:  # 偏黑色判断，像素值总和小于等于200
                 break
             time.sleep(0.2)
 
@@ -29,6 +29,7 @@ class UIOperator:
         # 2. 输入问题
         pyautogui.hotkey("ctrl", "v")
 
+        time.sleep(0.5)
         # 3. 定位并点击小飞机按钮
         pyautogui.click(x=800, y=852)
         print("T-TARS开始运行")
@@ -37,4 +38,4 @@ class UIOperator:
 # 调用示例
 if __name__ == "__main__":
     client = UIOperator()
-    client.run_and_ask("你好呀~")
+    client.run_and_ask("休眠~")

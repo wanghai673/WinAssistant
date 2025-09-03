@@ -15,7 +15,7 @@ class Reader:
         sample_rate: int = 16000,
         frame_len: int = 512,
         max_silence_secs: float = 1.8,
-        max_session_secs: float = 30,
+        max_session_secs: float = 20,
         calibrate_secs: float = 0.5,
         min_rms_threshold: float = 0.018,
         whisper_model_id: str = "medium",
@@ -149,7 +149,7 @@ class Reader:
             s += x * x
         return math.sqrt(s / len(frame)) / 32768.0
 
-    def realtime_zh(self, rec_shared=None, beep_guard=0.8):
+    def realtime_zh(self, rec_shared=None, beep_guard=0.5):
         """
         唤醒后进入：
         - 复用外部 PvRecorder（如果传入），否则自建
@@ -242,7 +242,7 @@ class Reader:
                 temperature=0.0,
                 no_speech_threshold=0.6,
                 condition_on_previous_text=True,
-                initial_prompt="你是一个语音电脑操作助手，你接受用户的语音，用户想对Windows电脑做操作。"  # 可自定义提示词
+                initial_prompt="这是一段用户对Windows操作指令。"  # 可自定义提示词
             )
 
             parts = []
