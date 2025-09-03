@@ -67,37 +67,6 @@ WINASSISTANT/
 
 ---
 
-## 🔧 关键类与方法
-
-**播放器** `utils/player.py`
-
-```python
-# 播放提示音
-player.play_voice(self, block=True, type="zai")
-```
-
-**识别器** `utils/reader.py`
-
-```python
-def realtime_zh(self, rec_shared=None, beep_guard=0.5):
-    """
-    唤醒后进入：
-    - 复用外部 PvRecorder（如果传入），否则自建
-    - 可选吞掉 beep_guard 秒提示音
-    - 简易 VAD：检测说话，静音超过 MAX_SILENCE_SECS 结束
-    - 用 fast-whisper 识别并返回文本
-    """
-```
-
-**唤醒检测** `utils/rouser.py`
-
-```python
-def process(self, pcm):
-    return self.porcupine.process(pcm)
-```
-
----
-
 ## 🚀 快速开始
 
 ### 1) 环境准备
@@ -206,12 +175,6 @@ while True:
 - **识别慢**：试用更小的 fast-whisper 模型或关闭其他高占用程序。
 - **唤醒不灵敏**：更换更清晰的唤醒词模型 `.ppn`，或在安静环境下测试。
 - **提示音被识别进去**：增大 `beep_guard`（如 `0.7`）。
-
----
-
-## 📄 许可证
-
-Apache-2.0 / GPL-3.0
 
 ---
 
